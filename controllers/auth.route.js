@@ -1,23 +1,30 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+const config = require('./../configs');
+function generateToken(data) {
+    let token = jwt.sign({ id: data.id }, config.jwtSecret);
+    return token;
+}
+
 router.get('/', function (req, res, next) {
     res.json({
         msg: 'form empty route'
     })
 })
-router.get('/login', function (req, res, next) {
-    // application logic here
-    // application level middleware
-    res.json({
-        msg: 'Hi from login'
-    })
-})
+
 router.post('/login', function (req, res, next) {
     // application logic here
     // application level middleware
+    // validation() joi express-validator
+    // password encryption // bcrypt(not recommended for windows)
+    // db_stuff()
+    // result
+    let token = generateToken({ id: 2, name: 'rkjl' });
     res.json({
-        msg: 'Hi from login POST'
-    })
+        user: req.body,
+        token: token
+    });
 })
 
 router.get('/register', function (req, res, next) {
@@ -27,7 +34,7 @@ router.get('/register', function (req, res, next) {
 
     //db stuff
     // insert
-    
+
     res.json({
         msg: 'Hi from register',
         body: req.body

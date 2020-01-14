@@ -5,8 +5,8 @@ const path = require('path');
 
 // load routing level middleware
 // whereever express router is used inside app.use block it is routing level middleware
-const authRoute = require('./controllers/auth.route');
-const userRoute = require('./controllers/user.route');
+
+const API_ROUTE = require('./routes/api.routes');
 // third party middleware
 app.use(morgan('dev'));
 
@@ -17,15 +17,10 @@ app.use(express.urlencoded({
 }))
 app.use(express.json())
 // app.use(express.static('files')); // internally request serve
-app.use('/file',express.static(path.join(__dirname,'files')));
+app.use('/file', express.static(path.join(__dirname, 'files')));
 
 // routing party middleware here
-app.use('/auth', authRoute);
-app.use('/user', userRoute)
-app.use('/notification', userRoute)
-app.use('/message', userRoute)
-app.use('/chat', userRoute)
-app.use('/payment', userRoute)
+app.use('/api', API_ROUTE);
 
 // application level middleware as 404 error handler
 app.use(function (req, res, next) {
