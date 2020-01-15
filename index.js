@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const path = require('path');
+const cors = require('cors');
 
 // load routing level middleware
 // whereever express router is used inside app.use block it is routing level middleware
@@ -15,7 +16,9 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({
   extended: true
 }))
-app.use(express.json())
+app.use(express.json());
+
+app.use(cors()); // allow everything 
 // app.use(express.static('files')); // internally request serve
 app.use('/file', express.static(path.join(__dirname, 'files')));
 
@@ -33,7 +36,7 @@ app.use(function (req, res, next) {
 // error handling middleware
 app.use(function (err, req, res, next) {
   console.log('i am error handling middleware');
-  res.status(400).json({
+  res.status(err.status || 400).json({
     msg: 'from error handling middleware',
     err: err
   })

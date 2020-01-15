@@ -7,25 +7,36 @@ function generateToken(data) {
     return token;
 }
 
+console.log('i am called')
 router.get('/', function (req, res, next) {
     res.json({
         msg: 'form empty route'
     })
 })
-
-router.post('/login', function (req, res, next) {
-    // application logic here
-    // application level middleware
-    // validation() joi express-validator
-    // password encryption // bcrypt(not recommended for windows)
-    // db_stuff()
-    // result
+router.post('/', function (req, res, next) {
+    console.log('req.body >>>>', req.body);
     let token = generateToken({ id: 2, name: 'rkjl' });
     res.json({
         user: req.body,
         token: token
     });
 })
+
+// router.post('/login', function (req, res, next) {
+//     // application logic here
+//     // application level middleware
+//     // validation() joi express-validator
+//     // password encryption // bcrypt(not recommended for windows)
+//     // db_stuff()
+//     // result
+//     conosle.log('req.body in server >>', req.body);
+//     res.end('hello')
+//     // let token = generateToken({ id: 2, name: 'rkjl' });
+//     // res.json({
+//     //     user: req.body,
+//     //     token: token
+//     // });
+// })
 
 router.get('/register', function (req, res, next) {
     // application logic here
